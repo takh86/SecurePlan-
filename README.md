@@ -1,49 +1,71 @@
 # SecurePlan
 
-Praxisphasenprojekt (THM, ca. 12 Wochen, Mo–Do, Einzelentwicklung).
+Praxisphasenprojekt an der THM: fokussierte, rollenbasierte Personaleinsatzplanung für Sicherheitsunternehmen.
 
-> **Stand 05.09.2026:** Es existiert noch **kein Anwendungscode**.
-> Das Repository enthält derzeit ausschließlich die Projektplanung.
-> Die Umsetzung beginnt in Woche 1 (Meilenstein M0 – Fundament).
+> **Stand 21.09.2026**
+> Die Repository-Planung vom 05.09.2026 war veraltet und wurde mit den später freigegebenen Projektartefakten synchronisiert.
+> **Aktueller formaler Schritt: Phase 6 – Software Architecture & System Design.**
+> Es existiert weiterhin **kein nachgewiesener Produktions-Anwendungscode** in diesem Repository. Klickbare Phase-5-Prototypen sind Design-/UX-Artefakte, keine implementierte Produktfunktion.
+
+## Projektstatus
+
+| Bereich | Status |
+|---|---|
+| Phase 2 – Requirements Baseline v1.1 | **FINAL / APPROVED / FROZEN** |
+| Phase 3 – Scope & MVP v1.1 | **FINAL / APPROVED / FROZEN** |
+| Phase 3.5 – Product Research & Validation | **FINAL / APPROVED** |
+| CR-01 / Baseline Amendment v1.2 | **FINAL / APPROVED** – feste 3er-Ersatzgrenze entfernt |
+| Phase 4 – Systemanalyse v1.1 Professional | fachlicher Stand vorhanden; Dokumentstatus bleibt **REVIEWED DRAFT** |
+| Phase 5 – UX/UI | **PASS FOR PHASE 6** |
+| Phase 5.9 – reale Usability-Tests | **PENDING FOLLOW-UP**, blockiert Phase 6 nicht |
+| Phase 6 – Architektur | **AKTUELL / IN ARBEIT** |
+| Feature-Implementierung | **NOCH NICHT BEGONNEN / NICHT NACHGEWIESEN** |
+
+Details: [docs/project-status.md](docs/project-status.md)
+
+## Verbindlicher Praktikums-MVP
+
+Der wirksame Umfang folgt Phase 3 plus genehmigten Change Requests:
+
+1. Foundation
+2. Authentifizierung / RBAC
+3. Mitarbeiter & Projekte
+4. manueller Monatsplan + Publish + Mitarbeiteransicht
+5. Absage & Ersatz
+6. planbasierte Statistik
+7. Admin Work Queue
+8. Qualitätsminimum: Validation, Error Handling, Audit-Minimum, Tests, OpenAPI, CI
+9. reproduzierbare Demo-/Staging-Auslieferung
+
+Excel-Import ist SHOULD/Stretch. Tagesplan, Lohnabrechnung und vollständige Notifications sind nicht Teil des verbindlichen Praktikums-MVP.
+
+Siehe [docs/requirements/effective-mvp-baseline.md](docs/requirements/effective-mvp-baseline.md).
 
 ## Dokumentation
 
-| Dokument | Inhalt |
+| Dokument | Zweck |
 |---|---|
-| [`docs/planung/fahrplan-12-wochen.md`](docs/planung/fahrplan-12-wochen.md) | 12-Wochen-Fahrplan mit Meilensteinen und Abschlusskriterien |
-| [`docs/planung/arbeitsvorrat.md`](docs/planung/arbeitsvorrat.md) | Priorisierter Arbeitsvorrat (Backlog) |
-| [`docs/planung/aktuelle-woche.md`](docs/planung/aktuelle-woche.md) | Detailplan der laufenden Woche (Mo–Do) |
-| [`docs/planung/fortschrittsprotokoll.md`](docs/planung/fortschrittsprotokoll.md) | Tatsächlicher Fortschritt — Grundlage aller Berichte |
-| [`docs/planung/kapazitaet-und-risiken.md`](docs/planung/kapazitaet-und-risiken.md) | Kapazitätsmodell, Schutzregeln, Rollenmodell, Risikoregister |
-| [`docs/requirements/`](docs/requirements/) | Grundlagendokumente Phase 2 / Phase 3 + Anforderungsindex |
-| [`docs/architektur/`](docs/architektur/) | Architekturüberblick und Architekturentscheidungen (ADR) |
-| [`docs/betreuung/vorlagen.md`](docs/betreuung/vorlagen.md) | Vorlagen für Check-in, Check-out und Wochenbericht |
+| [docs/project-status.md](docs/project-status.md) | Aktueller Phasenstand und Source-of-Truth-Regeln |
+| [docs/requirements/](docs/requirements/) | Wirksame Requirements-/Scope-Baseline und Traceability |
+| [docs/ux-ui/phase-5-baseline.md](docs/ux-ui/phase-5-baseline.md) | Konsolidierter Phase-5-Handoff |
+| [docs/architektur/ueberblick.md](docs/architektur/ueberblick.md) | Phase-6-Architekturarbeitsstand |
+| [docs/planung/aktuelle-woche.md](docs/planung/aktuelle-woche.md) | Aktueller Arbeitsabschnitt |
+| [docs/planung/fahrplan-12-wochen.md](docs/planung/fahrplan-12-wochen.md) | Implementierungsbaseline + aktueller Overlay |
+| [docs/planung/arbeitsvorrat.md](docs/planung/arbeitsvorrat.md) | Priorisierter Arbeitsvorrat |
+| [docs/planung/fortschrittsprotokoll.md](docs/planung/fortschrittsprotokoll.md) | Tatsächlich nachweisbarer Fortschritt |
 
-## Offene Voraussetzung
+## Statusdisziplin
 
-Die beiden verbindlichen Grundlagendokumente fehlen noch im Repository:
+Für Umsetzungsaufgaben gilt weiter:
+**GEPLANT · IN ARBEIT · FERTIG · BLOCKIERT · ZURÜCKGESTELLT**
 
-- Phase 2 – Requirements Baseline v1.1 FINAL
-- Phase 3 – Scope & MVP v1.1 FINAL
+Zusätzlich wird bei Projektartefakten klar unterschieden:
+**DOCUMENTED · PROTOTYPED · IMPLEMENTED**
 
-Solange sie fehlen, sind der Arbeitsvorrat mit echten Anforderungskennungen und
-die Fahrplaninhalte ab Woche 2 als `BLOCKIERT` geführt.
-Details: [`docs/requirements/README.md`](docs/requirements/README.md)
+Ein dokumentierter oder klickbarer UX-Prototyp ist **nicht** automatisch implementierte Software.
 
-## Kapazität
+## Nächster Gate
 
-48 Bruttotage · 75 % Planauslastung · **36 verplante Tage**, 12 Tage Puffer.
-Funktionsstopp ab Woche 10 → **≈ 24 verplante Entwicklertage für den gesamten
-MUSS-Umfang**.
+Phase 6 definiert und begründet Architekturziele, Qualitätsattribute, Bausteine, Domain-/Modulgrenzen, Datenverantwortung, Frontend-/Backend-Schnitt, Security-/RBAC-Ansatz, Transaktions-/Concurrency-Strategie und ADR-Kandidaten.
 
-## Statusvokabular
-
-`GEPLANT` · `IN ARBEIT` · `FERTIG` · `BLOCKIERT` · `ZURÜCKGESTELLT`
-
-`FERTIG` ausschließlich mit Nachweis im Repository. Ein geplanter Stand wird
-nie als erledigt gemeldet.
-
-## Einrichtung
-
-Wird in Woche 1 ergänzt (`SP-W01-03`), sobald der Technologiestack in ADR-0001
-entschieden ist.
+**Keine Feature-Implementierung vor dem Architektur-Gate.**
