@@ -1,168 +1,60 @@
-# 12-Wochen-Fahrplan
+# 12-Wochen-Fahrplan – Implementation Baseline + aktueller Overlay
 
-**Stand:** 05.09.2026
-**Rahmen:** festgelegt · **Inhalte ab Woche 2:** `BLOCKIERT` (Phase 3 fehlt)
+**Originalbasis:** Phase 3 Scope & MVP v1.1  
+**Synchronisiert:** 21.09.2026
 
-Grundlage: der Fahrplan aus Phase 3, verfeinert um den tatsächlichen
-Repository-Zustand (grüne Wiese, 1 Commit, kein Code).
-Kapazitätsmodell und Schutzregeln: siehe `kapazitaet-und-risiken.md`.
+## Wichtige Einordnung
 
----
+Die ursprüngliche Repository-Fassung vom 05.09.2026 behandelte Woche 1 als aktuellen Projektstand. Das ist nicht mehr korrekt.
 
-## Übersicht
+Seitdem wurden Phase 2/3, Phase 3.5, Systemanalyse und Phase 5 bis zum Gate **PASS FOR PHASE 6** bearbeitet. Der aktuelle formale Schritt ist Phase 6 Architektur.
 
-| Woche | Meilenstein | Hauptziel | Umfang | Puffer |
-|---|---|---|---|---|
-| 1 | **M0 – Fundament** | Lauffähiges Skelett vom Aufruf bis zur Datenbank, in CI und Staging | ✅ festgelegt | Do |
-| 2 | M1 – Sicherheitskern | Authentifizierung/Autorisierung als erster vertikaler Fachschnitt | ⛔ aus Phase 3 | Do |
-| 3 | M1 | Kern-Datenmodell + erster fachlicher MUSS-Schnitt | ⛔ aus Phase 3 | Do |
-| 4 | M1 | MUSS-Schnitte | ⛔ aus Phase 3 | Do |
-| 5 | **M2 – MVP-Kern** | MUSS-Schnitte, Zwischenvorführung | ⛔ aus Phase 3 | Do |
-| 6 | M2 | MUSS-Schnitte | ⛔ aus Phase 3 | Do |
-| 7 | M2 | MUSS-Schnitte | ⛔ aus Phase 3 | Do |
-| 8 | **M3 – MUSS vollständig** | Letzte MUSS-Schnitte; Umfangsentscheidung SOLL | ⛔ aus Phase 3 | Do |
-| 9 | M3 | SOLL nur bei erfüllten Eintrittsbedingungen; sonst Härtung | ⛔ aus Phase 3 | Do |
-| 10 | **Funktionsstopp** | Keine neuen Funktionen. Fehlerbehebung, Sicherheitsdurchsicht, Testlücken | ✅ festgelegt | ganze Woche |
-| 11 | M4 – Stabilisierung | Abschlussdokumentation, Architekturüberblick, ADR-Vollständigkeit | ✅ festgelegt | ganze Woche |
-| 12 | **M4 – Abgabe** | Abschlussbericht, Vorführung, Übergabe | ✅ festgelegt | ganze Woche |
+Der folgende 12-Wochen-Plan bleibt die **Implementierungsbaseline des Praktikums-MVP**. Er ist keine Behauptung, dass der Kalender heute noch bei „Woche 1“ steht.
 
----
+## Aktueller Overlay
 
-## In jeder Woche geltende Grundsätze
+**Jetzt:** Phase 6 – Software Architecture & System Design  
+**Danach:** Implementierung entlang der untenstehenden Phase-3-Sequenz  
+**Noch nicht erlaubt:** ein UX-Prototyp als implementiertes Feature zählen
 
-- **Wöchentliches Abschlusskriterium:** `main` ist grün, Staging läuft,
-  die Woche ist im `fortschrittsprotokoll.md` dokumentiert, der Wochenbericht
-  ist an die Betreuung verschickt.
-- Ein Umfangsverzug wird durch Streichen von SOLL/KANN aufgefangen —
-  **nie** durch Kürzen von Sicherheit, Autorisierung oder Datenintegrität.
-- Ab **Woche 8** wird wöchentlich geprüft, ob der MUSS-Umfang bis Woche 9 hält.
-  Wenn nicht: Umfangsgespräch mit der Betreuung **in Woche 8**, nicht später.
-- Am Ende jeder Woche wird die Folgewoche neu geplant (`aktuelle-woche.md`).
-  Es wird **nicht** im Voraus ein starrer 48-Tage-Plan festgeschrieben.
+## Implementierungsbaseline
 
----
+| Implementierungswoche | Fokus | Exit-Kriterium |
+|---|---|---|
+| 1 | Foundation: Repo-Struktur, DB, Migrationen, Docker lokal, CI-Basis | Clean Build + DB-Migration + Testpipeline |
+| 2 | Auth/RBAC + User-Grundmodell | serverseitige AuthN/AuthZ funktioniert inkl. Negativtests |
+| 3 | Mitarbeiter, Projekte, monatsbezogene Zuordnung | Stammdaten + zentrale Constraints |
+| 4 | Monatsplan-Datenmodell + manuelle Erfassung/Pflege | Plan ohne Excel anlegbar/validierbar/bearbeitbar |
+| 5 | Publish, Mitarbeiteransicht, Statistik, erste Staging-Iteration | Planning Flow End-to-End |
+| 6 | Planänderungen/Revalidation; optional Excel-Import Stretch | Plan-Core stabil |
+| 7 | Absage + automatischer Ersatzbedarf + Eligibility | Absage erzeugt gültigen Ersatzbedarf |
+| 8 | Ersatzangebote + Büroentscheidung + atomare Übernahme | Hauptworkflow End-to-End |
+| 9 | Edge Cases, Idempotenz, Admin Work Queue | Business Rules/Statusübergänge stabil |
+| 10 | Regression, Security Review, Audit-Minimum, Error Handling, OpenAPI | Feature Freeze / Hardening |
+| 11 | Release Candidate, Deployment-Härtung, README, Demo-Daten | reproduzierbarer Release Candidate |
+| 12 | Bugfix, UX-Polish, Regression, Demo, Praktikumsdokumentation | MVP-Abnahme möglich |
 
-## Woche 1 — M0 Fundament (festgelegt)
+## CR-01-Auswirkung
 
-**Hauptziel:** Ein „laufendes Skelett" existiert — ein trivialer Pfad
-HTTP → Dienstschicht → Datenbank → Test → CI → Staging mit einer
-Platzhalter-Ressource. **Bewusst keine Fachfunktion**; die beginnt in Woche 2,
-wenn Phase 2/3 ausgewertet sind.
+Die historische Week-9-/M5-Regel „3er-Limit“ ist entfernt. Sie darf weder implementiert noch getestet werden.
 
-**Vorführbares Ergebnis:** `curl` gegen die Staging-URL liefert eine Antwort,
-die nachweislich aus der Datenbank stammt; der Gesundheitsendpunkt meldet
-den Datenbankzustand korrekt.
+## Scope Guardrails
 
-**Abschlusskriterien**
-- [ ] Phase 2 und Phase 3 liegen unter `docs/requirements/` im Repository
-- [ ] Anforderungsindex existiert (alle Kennungen aus Phase 2/3 erfasst)
-- [ ] ADR-0001 (Technologiestack) und ADR-0002 (AuthN/AuthZ-Ansatz) geschrieben
-- [ ] `docker compose up` startet Anwendung + Datenbank lokal
-- [ ] Mindestens eine Migration angewandt
-- [ ] CI läuft bei jedem Push: Formatprüfung, statische Analyse, Tests, Build
-- [ ] Mindestens ein Einheiten- und ein Integrationstest, beide grün
-- [ ] Staging-Umgebung erreichbar, Gesundheitsendpunkt antwortet
-- [ ] Arbeitsvorrat für Woche 2 aus Phase 3 abgeleitet
+- MUST vor SHOULD
+- Excel-Import darf den manuellen Monatsplan nicht blockieren
+- Tagesplan und Lohnabrechnung bleiben Post-Praktikum
+- neue Ideen standardmäßig ins Backlog
+- Tests, Authorization und Datenintegrität werden bei Zeitdruck nicht gestrichen
+- ab Feature Freeze keine neue MUST-Funktionalität ohne Scope-Entscheidung
 
-**Risiken:** R1 (fehlende Grundlagen), R6 (Fundamentaufwand), R7 (Staging)
-**Abhängigkeiten:** Phase 2 und Phase 3 müssen am Montag eingecheckt sein
-**Puffer:** Donnerstag
+## Architektur-Gate vor der Implementierung
 
-Detailplan: `aktuelle-woche.md`
+Vor Start der Implementierungswoche 1 müssen die Phase-6-Ergebnisse freigegeben sein:
+- Module/Boundaries
+- Auth-/Security-Ansatz
+- Daten-/Transaktionsstrategie
+- Concurrency/Idempotenz
+- API-/Error-Contracts
+- ADR-Basis
 
----
-
-## Woche 2 — M1 Sicherheitskern
-
-**Hauptziel:** Authentifizierung und Autorisierung als **erster vertikaler
-Fachschnitt** — bewusst zuerst, nicht zuletzt (Risiko R4).
-
-**Umfang:** ⛔ `BLOCKIERT` — wird aus den SEC-/FR-Anforderungen der Phase 2 und
-dem MUSS-Umfang der Phase 3 abgeleitet.
-
-**Vorführbares Ergebnis (Rahmen):** Ein Nutzer meldet sich an; ein Zugriff ohne
-ausreichende Berechtigung wird nachweislich abgewiesen — belegt durch einen
-Negativtest, nicht nur durch die Oberfläche.
-
-**Abschlusskriterien (Rahmen)**
-- [ ] Autorisierung wird in der Dienstschicht erzwungen, nicht nur in der Oberfläche
-- [ ] Negativtests für unberechtigten Zugriff vorhanden und grün
-- [ ] Geheimnisse ausschließlich über Umgebungsvariablen, nichts im Repository
-- [ ] Schnitt in Staging vorführbar
-
-**Abhängigkeiten:** Woche 1 vollständig; ADR-0002 entschieden
-**Risiken:** R4 (Unterschätzung), R2 (Umfang)
-**Puffer:** Donnerstag
-
----
-
-## Wochen 3–9 — M1 bis M3
-
-**Umfang:** ⛔ `BLOCKIERT` — wird nach Vorliegen von Phase 3 aus dem
-priorisierten Arbeitsvorrat belegt (`arbeitsvorrat.md`).
-
-**Belegungsregel:** Pro Woche 2–3 vertikale Schnitte à 1–3 verplante Tage,
-strikt in Abhängigkeitsreihenfolge, MUSS vor SOLL. Donnerstag bleibt Puffer.
-
-**Prüfpunkt Woche 5:** Zwischenvorführung des MVP-Kerns für die Betreuung.
-**Prüfpunkt Woche 8:** Umfangsentscheidung — hält MUSS bis Woche 9?
-Wenn nein, Umfangsgespräch **jetzt**.
-**Woche 9:** SOLL-Einträge **nur**, wenn deren Eintrittsbedingungen aus Phase 3
-nachweislich erfüllt sind. Andernfalls: Härtung, Testlücken, Fehlerbehebung.
-
----
-
-## Woche 10 — Funktionsstopp (festgelegt)
-
-**Hauptziel:** Stabilisierung. **Ab dieser Woche keine neuen Funktionen.**
-
-**Umfang**
-- Fehlerbehebung aus den Wochen 1–9
-- Vollständige Sicherheitsdurchsicht (Autorisierung, Eingabevalidierung, Datenzugriff, Geheimnisverwaltung, Abhängigkeiten)
-- Testlücken schließen, insbesondere Autorisierungs-Negativfälle und Grenzfälle der Geschäftsregeln
-- Anforderungsindex vollständig auf tatsächlichen Stand bringen
-
-**Abschlusskriterien**
-- [ ] Kein Eintrag im Anforderungsindex trägt einen unbelegten Status
-- [ ] Sicherheitsdurchsicht dokumentiert, Befunde behoben oder ausdrücklich als Restrisiko benannt
-- [ ] `main` grün, Staging läuft
-
-**Regel:** Jeder Wunsch nach einer Ausnahme geht als Umfangsentscheidung an die
-Betreuung — er wird nicht still umgesetzt.
-
-**Risiken:** R8 (Funktionsstopp wird unterlaufen)
-
----
-
-## Woche 11 — M4 Stabilisierung (festgelegt)
-
-**Hauptziel:** Das Projekt ist ohne mündliche Erklärung verständlich.
-
-**Umfang**
-- `docs/architektur/ueberblick.md` auf den Endstand bringen
-- ADR-Bestand vollständig und widerspruchsfrei
-- README: Einrichtung, Betrieb, Deployment, Tests
-- Rückverfolgbarkeit final: Anforderung → Schnitt → Test → Nachweis
-- Bekannte Einschränkungen und Restrisiken schriftlich benennen
-
-**Abschlusskriterien**
-- [ ] Ein fremder Entwickler kann das Projekt allein anhand der Dokumentation aufsetzen
-- [ ] Jede getroffene Architekturentscheidung hat ein ADR
-- [ ] Anforderungsindex spiegelt den tatsächlichen Repository-Stand
-
----
-
-## Woche 12 — M4 Abgabe (festgelegt)
-
-**Hauptziel:** Abgabefähiger Stand und Vorführung.
-
-**Umfang**
-- Abschlussbericht aus `fortschrittsprotokoll.md` und dem Git-Verlauf erstellen
-- Vorführung vorbereiten und proben (Ablauf entlang der MUSS-Schnitte)
-- Übergabe: Repository, Staging-Zugang, offene Punkte
-- Abschließende Rückschau: was hat getragen, was nicht
-
-**Abschlusskriterien**
-- [ ] Abschlussbericht enthält ausschließlich nachweisbare Ergebnisse
-- [ ] Vorführung läuft gegen Staging, nicht gegen die lokale Umgebung
-- [ ] Nicht umgesetzter Umfang ist ausdrücklich als `ZURÜCKGESTELLT` benannt, mit Begründung
+Damit wird verhindert, dass „UI zuerst“ oder „DB aus Screens ableiten“ die Architektur bestimmt.
