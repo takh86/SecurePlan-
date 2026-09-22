@@ -1,12 +1,14 @@
 # Phase 5 – UX/UI Baseline Handoff
 
-**Stand:** 16.09.2026 / synchronisiert ins Repository am 21.09.2026  
+**Stand:** 16.09.2026 / Repo-Sync aktualisiert am 22.09.2026  
 **Gate:** **PASS FOR PHASE 6 / CONTROLLED FOLLOW-UPS**
+
+> **Amendment:** Phase 5.2 wurde durch [Phase-5.2-Amendment v1.2 (CR-02)](phase-5-2-amendment-cr-02.md) präzisiert. Company ist für Tenant-Nutzer fester Account-Kontext, nicht wählbar; die frühere Future-Company-Switcher-/Membership-Annahme ist aufgehoben.
 
 ## Teilphasen
 
 - 5.1 UX Requirements – PASS
-- 5.2 Information Architecture – PASS / FINAL
+- 5.2 Information Architecture – PASS / FINAL, amended by v1.2 CR-02
 - 5.3 User Flows – PASS
 - 5.4 Screen Inventory – PASS
 - 5.5 Screen & Interaction States – PASS
@@ -18,7 +20,7 @@
 
 ## Frozen Produkt-/UX-Prinzipien
 
-- Company / Project / Month als sichtbarer Kontext
+- Company ist fester Account-Kontext; Project / Month sind sichtbare operative Kontexte
 - Admin: exceptions first / Work Queue statt dekorativem KPI-Dashboard
 - Deep Links direkt zum fachlichen Fall
 - bekannte Kontextdaten nicht erneut abfragen
