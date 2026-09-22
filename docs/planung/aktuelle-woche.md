@@ -16,8 +16,8 @@ Eine Architekturbaseline erstellen, die den freigegebenen MVP technisch schneide
 
 - Phase 6.1 – Architecture Goals & Quality Attributes: FINAL / RE-APPROVED
 - Phase 6.2 – System Context & Container View: FINAL / RE-APPROVED
-- Phase 6.3 – Backend Building Blocks: FINAL / RE-APPROVED
-- Phase 6.4 – Module Dependencies & Public Contracts: FINAL / APPROVED
+- Phase 6.3 v1.2.1 – Backend Building Blocks: FINAL / RE-APPROVED – Review Patch
+- Phase 6.4 v1.0.1 – Module Dependencies & Public Contracts: FINAL / APPROVED – Review Patch
 
 ## Bestehende Architektur-Arbeitspakete
 

@@ -18,8 +18,8 @@
 | Phase 5.10 | PASS FOR PHASE 6 | UX/UI-Baseline eingefroren; kontrollierte Follow-ups bleiben |
 | Phase 6.1 | FINAL / RE-APPROVED | Architecture Goals & Quality Attributes |
 | Phase 6.2 | FINAL / RE-APPROVED | System Context & Container View |
-| Phase 6.3 | FINAL / RE-APPROVED | Backend Building Blocks |
-| Phase 6.4 | FINAL / APPROVED | Module Dependencies & Public Contracts |
+| Phase 6.3 v1.2.1 | FINAL / RE-APPROVED – Review Patch | Backend Building Blocks; Ownership-Präzisierung ohne Boundary-Änderung |
+| Phase 6.4 v1.0.1 | FINAL / APPROVED – Review Patch | Module Dependencies & Public Contracts; No-Cycle-Präzisierung |
 | Phase 6.5 | NEXT / GEPLANT | Transactions, Concurrency & Idempotency |
 | Feature-Implementierung | NOT IMPLEMENTED / NOT EVIDENCED | startet erst nach vollständigem Architektur-Gate |
 

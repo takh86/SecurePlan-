@@ -17,11 +17,11 @@
 
 ### SP-A06-03 — Domain-/Modulgrenzen
 **Status:** FERTIG / APPROVED  
-**Nachweis:** Phase 6.3 v1.2.
+**Nachweis:** Phase 6.3 v1.2.1 – Review Patch.
 
 ### SP-A06-03B — Module Dependencies & Public Contracts
 **Status:** FERTIG / APPROVED  
-**Nachweis:** Phase 6.4 v1.0.
+**Nachweis:** Phase 6.4 v1.0.1 – Review Patch.
 
 ### SP-A06-04 — Datenmodell-Invarianten
 **Status:** GEPLANT  
