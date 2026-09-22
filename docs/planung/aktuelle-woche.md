@@ -1,13 +1,94 @@
-# Aktueller Arbeitsabschnitt — Phase 6
+# Aktueller Arbeitsabschnitt — Phase 6: Software Architecture & System Design
 
 **Stand:** 22.09.2026  
-**Status:** PRE-IMPLEMENTATION  
-**Nächster Schritt:** Phase 6.5 – Transactions, Concurrency & Idempotency
+**Status:** IN ARBEIT / PRE-IMPLEMENTATION  
+**Nächster fachlicher Schritt:** Phase 6.5 – Transactions, Concurrency & Idempotency
 
-Abgeschlossen: 6.1, 6.2, 6.3, 6.4.
+Die alte Datei „Woche 1 – M0 Fundament“ war eine Implementierungsplanung aus dem Stand 05.09.2026. Seitdem wurden Requirements, Scope, Research, Systemanalyse und UX/UI abgeschlossen bzw. weitergeführt.
 
-6.5 klärt Transaction Boundaries, Commit/Rollback, Optimistic Locking, Idempotency, Duplicate Protection, Race Conditions und Audit-Transaktionsverhalten.
+**Aktuell wird noch keine Feature-Implementierung gestartet.**
 
-Guardrails: Modular Monolith · Company = Tenant · Account genau eine Company · kein Company Switcher · keine Cross-Module-Repositories/Tabellenmutationen · keine Zyklen · Public Contracts · TenantContext serverseitig.
+## Ziel dieses Abschnitts
 
-Noch keine Feature-Implementierung.
+Eine Architekturbaseline erstellen, die den freigegebenen MVP technisch schneidet und anschließend einen sicheren Start der Implementierung ermöglicht.
+
+## Abgeschlossene Architekturteilphasen
+
+- Phase 6.1 – Architecture Goals & Quality Attributes: FINAL / RE-APPROVED
+- Phase 6.2 – System Context & Container View: FINAL / RE-APPROVED
+- Phase 6.3 – Backend Building Blocks: FINAL / RE-APPROVED
+- Phase 6.4 – Module Dependencies & Public Contracts: FINAL / APPROVED
+
+## Bestehende Architektur-Arbeitspakete
+
+### A6-01 — Architekturziele & Qualitätsattribute
+FERTIG.
+
+### A6-02 — Systemkontext & Bausteine
+FERTIG.
+
+### A6-03 — Domain- und Modulgrenzen
+FERTIG.
+
+### A6-03B — Dependencies & Public Contracts
+FERTIG.
+
+### A6-04 — Daten- und Konsistenzmodell
+Noch GEPLANT:
+- Company / Project / Month
+- Tenant Ownership
+- monatsbezogene Mitarbeiterzuordnung
+- Draft / Published
+- DB-Constraints
+
+### A6-05 — API & Authorization
+Noch GEPLANT:
+- serverseitiges RBAC
+- Tenant Isolation
+- Employee sieht nur eigene Ressourcen
+- Admin-Rechte
+- stabile Error Codes / Domain Errors
+
+### A6-06 — Transactions / Concurrency / Idempotency
+**NÄCHSTER SCHRITT**:
+- atomare Ersatz-Planänderung
+- Optimistic Locking
+- Idempotenz
+- Duplicate Protection
+- Race Conditions
+- Audit-Transaktionsverhalten
+
+### A6-07 — ADR Pack + Architecture Review
+Danach:
+- Technologiestack / Repository-Struktur
+- AuthN/AuthZ
+- Modulgrenzen / Modularer Monolith
+- Persistenz / ORM / Migrationen
+- Concurrency / Optimistic Locking
+- Transaktionsgrenzen
+- API-/Error-Contract
+- Deployment-/CI-Baseline
+- Multi-Tenancy / Tenant Data Isolation
+
+## Definition of Done Phase 6
+
+- Architekturziele priorisiert
+- Kontext- und Bausteinsicht vorhanden
+- Domain-/Modulgrenzen begründet
+- Dependencies/Public Contracts geklärt
+- Datenverantwortung und zentrale Invarianten beschrieben
+- Security-/Authorization-/Tenant-Isolation-Strategie beschrieben
+- Transaktions-/Concurrency-Risiken geklärt
+- ADR-Entwürfe mit Alternativen/Trade-offs vorhanden
+- Architektur-Review durchgeführt
+- **Human Approval vor Implementierungsstart**
+
+## Explizit nicht Teil dieses Abschnitts
+
+- Employee Mobile UI implementieren
+- Backend-Features bauen
+- DB-Schema final migrieren
+- Auth programmieren
+- CI/CD produktiv einrichten
+
+Diese Punkte folgen nach dem Architektur-Gate in der Implementierungssequenz.

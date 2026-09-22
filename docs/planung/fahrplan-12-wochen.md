@@ -1,29 +1,28 @@
 # 12-Wochen-Fahrplan – Implementation Baseline + aktueller Overlay
 
 **Originalbasis:** Phase 3 Scope & MVP v1.1  
-**Synchronisiert:** 21.09.2026
+**Synchronisiert:** 22.09.2026  
+**Overlay:** CR-01 + CR-02 + Phase 4 FINAL v1.2
 
 ## Wichtige Einordnung
 
 Die ursprüngliche Repository-Fassung vom 05.09.2026 behandelte Woche 1 als aktuellen Projektstand. Das ist nicht mehr korrekt.
 
-Seitdem wurden Phase 2/3, Phase 3.5, Systemanalyse und Phase 5 bis zum Gate **PASS FOR PHASE 6** bearbeitet. Der aktuelle formale Schritt ist Phase 6 Architektur.
-
-Der folgende 12-Wochen-Plan bleibt die **Implementierungsbaseline des Praktikums-MVP**. Er ist keine Behauptung, dass der Kalender heute noch bei „Woche 1“ steht.
+Der folgende 12-Wochen-Plan bleibt die **Implementierungsbaseline des Praktikums-MVP**. CR-02 erweitert diesen 3-Monats-Scope nicht; die technische Basis wird jedoch von Beginn an tenant-aware.
 
 ## Aktueller Overlay
 
 **Jetzt:** Phase 6 – Software Architecture & System Design  
-**Danach:** Implementierung entlang der untenstehenden Phase-3-Sequenz  
-**Noch nicht erlaubt:** ein UX-Prototyp als implementiertes Feature zählen
+**Danach:** Implementierung entlang der Phase-3-Sequenz  
+**Noch nicht erlaubt:** UX-/Architekturdokumentation als implementiertes Feature zählen
 
 ## Implementierungsbaseline
 
 | Implementierungswoche | Fokus | Exit-Kriterium |
 |---|---|---|
-| 1 | Foundation: Repo-Struktur, DB, Migrationen, Docker lokal, CI-Basis | Clean Build + DB-Migration + Testpipeline |
-| 2 | Auth/RBAC + User-Grundmodell | serverseitige AuthN/AuthZ funktioniert inkl. Negativtests |
-| 3 | Mitarbeiter, Projekte, monatsbezogene Zuordnung | Stammdaten + zentrale Constraints |
+| 1 | Foundation: Repo-Struktur, DB, Migrationen, Docker lokal, CI-Basis; tenant-aware Grundstruktur | Clean Build + DB-Migration + Testpipeline |
+| 2 | Auth/RBAC + User-Grundmodell + serverseitiger TenantContext | AuthN/AuthZ + Tenant-Isolation-Negativtests |
+| 3 | Mitarbeiter, Projekte, monatsbezogene Zuordnung; Schichtkonfiguration; minimale KRANK/URLAUB-Verfügbarkeit | Stammdaten + zentrale Constraints |
 | 4 | Monatsplan-Datenmodell + manuelle Erfassung/Pflege | Plan ohne Excel anlegbar/validierbar/bearbeitbar |
 | 5 | Publish, Mitarbeiteransicht, Statistik, erste Staging-Iteration | Planning Flow End-to-End |
 | 6 | Planänderungen/Revalidation; optional Excel-Import Stretch | Plan-Core stabil |
@@ -38,23 +37,28 @@ Der folgende 12-Wochen-Plan bleibt die **Implementierungsbaseline des Praktikums
 
 Die historische Week-9-/M5-Regel „3er-Limit“ ist entfernt. Sie darf weder implementiert noch getestet werden.
 
+## CR-02-Auswirkung
+
+- Der 3-Monats-MVP bleibt fachlich eingefroren.
+- Foundation/Auth/Data Access werden tenant-aware gebaut.
+- Multi-Company-Aktivierung und minimaler Platform/Tenant Admin folgen erst in Monate 4–6.
+- Billing/Subscriptions und Full Self-Service-Onboarding bleiben WON'T NOW.
+
 ## Scope Guardrails
 
 - MUST vor SHOULD
 - Excel-Import darf den manuellen Monatsplan nicht blockieren
-- Tagesplan und Lohnabrechnung bleiben Post-Praktikum
+- Tagesplan und Lohnabrechnung bleiben außerhalb des 3-Monats-MVP
 - neue Ideen standardmäßig ins Backlog
-- Tests, Authorization und Datenintegrität werden bei Zeitdruck nicht gestrichen
+- Tests, Authorization, Tenant Isolation und Datenintegrität werden bei Zeitdruck nicht gestrichen
 - ab Feature Freeze keine neue MUST-Funktionalität ohne Scope-Entscheidung
 
 ## Architektur-Gate vor der Implementierung
 
 Vor Start der Implementierungswoche 1 müssen die Phase-6-Ergebnisse freigegeben sein:
 - Module/Boundaries
-- Auth-/Security-Ansatz
+- Auth-/Security-/Tenant-Isolation-Ansatz
 - Daten-/Transaktionsstrategie
 - Concurrency/Idempotenz
 - API-/Error-Contracts
 - ADR-Basis
-
-Damit wird verhindert, dass „UI zuerst“ oder „DB aus Screens ableiten“ die Architektur bestimmt.
