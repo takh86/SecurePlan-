@@ -1,9 +1,11 @@
 # Phase 6.4 – Module Dependencies & Public Contracts
 
-**Version:** v1.0  
+**Version:** v1.0.1  
 **Stand:** 22.09.2026  
-**Status:** FINAL / APPROVED – PASS FOR PHASE 6.5  
+**Status:** FINAL / APPROVED – Review Patch – PASS FOR PHASE 6.5  
 **Repo-Hinweis:** Kurzfassung des freigegebenen Projektartefakts; ersetzt nicht das ausführliche Originalartefakt.
+
+> **Review-Patch v1.0.1:** Präzisiert nur bereits geltende No-Cycle-Guardrails für Company Suspension und GEGENSTANDSLOS. Keine neue Dependency und keine neue Modulgrenze wurde eingeführt. Human Approval wird mit dem Merge von PR #3 dokumentiert.
 
 ## Leitprinzip
 
@@ -53,9 +55,9 @@ TenantContext ist kein Business-Modul.
 Workforce & Projects → Identity & Access: Zugriff deaktivieren / Sessions invalidieren. Keine Rückabhängigkeit von Identity auf Workforce-Repositories.
 
 ### Company Suspension
-Platform & Tenant Management besitzt Tenant-Status. Die Sperrmechanik darf **keine Identity & Access → Platform & Tenant Management-Abhängigkeit** erzeugen. In Phase 6.5/6.6 wird entschieden, ob Status in den Security/TenantContext gepusht bzw. dort sicher aufgelöst wird.
+Platform & Tenant Management besitzt Tenant-Status. Die Sperrmechanik darf **keine Identity & Access → Platform & Tenant Management-Abhängigkeit** erzeugen. Der konkrete Mechanismus wird in **Phase 6.5 bzw. SP-A06-05 (Security / RBAC / API Contracts)** festgelegt.
 
-## Explizit auf Phase 6.5 verschoben
+## Explizit auf die nächsten Architekturentscheidungen verschoben
 
 - konkrete Transaction Boundaries
 - Commit/Rollback über Modulgrenzen

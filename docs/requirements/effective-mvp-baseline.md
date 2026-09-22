@@ -57,6 +57,7 @@ FR-MP-01..04 (Excel-Import) bleiben Produktanforderungen, sind im Praktikum jedo
 - Mitarbeiter beantragt Absage für eigenen geplanten Dienst
 - gültige Absage erzeugt offenen Ersatzbedarf
 - geeignete Mitarbeiter sehen Ersatzmöglichkeit und können Angebot abgeben
+- pro Mitarbeiter und Ersatzdienst/Ersatzbedarf darf nur ein aktives Ersatzangebot existieren (BR-ER-03)
 - Büro/Admin prüft Absage, Dienst und Angebote zusammen
 - genau ein geeigneter Ersatz kann gewählt werden
 - Planänderung bei Genehmigung atomar
@@ -127,6 +128,8 @@ Diese Aktivierung erweitert **nicht** den eingefrorenen 3-Monats-Praktikums-MVP.
 - vollständige Notification-Matrix
 - vollständiger Audit-Viewer
 - erweitertes Dashboard
+- digitaler Urlaubsantrag
+- Urlaubskonto / Resturlaub als eigene Capability mit separaten Requirements
 - automatisiertes Offboarding
 - Retention-Automation
 - Production-Observability/Backup/RPO/RTO

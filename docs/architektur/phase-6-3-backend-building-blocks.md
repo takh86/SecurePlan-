@@ -1,9 +1,11 @@
 # Phase 6.3 – Backend Building Blocks
 
-**Version:** v1.2  
+**Version:** v1.2.1  
 **Stand:** 22.09.2026  
-**Status:** FINAL / RE-APPROVED  
+**Status:** FINAL / APPROVED – Review Patch  
 **Repo-Hinweis:** Kurzfassung des freigegebenen Projektartefakts; ersetzt nicht das ausführliche Originalartefakt.
+
+> **Review-Patch v1.2.1:** Präzisiert ausschließlich Ownership der Replacement Eligibility. Keine Modulgrenze und keine fachliche Architekturentscheidung wurde geändert. Human Approval wird mit dem Merge von PR #3 dokumentiert.
 
 ## Designprinzipien
 

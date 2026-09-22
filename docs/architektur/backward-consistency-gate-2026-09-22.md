@@ -12,12 +12,13 @@
 3. projektbezogene Schichtkonfiguration in Phase 4 v1.2 UC-16 zugeordnet.
 4. Phase 4 von REVIEWED DRAFT auf FINAL v1.2 gehoben.
 5. Company-Switcher-/Membership-Annahme aus Phase 5.2 durch Amendment entfernt.
-6. Identity & Access in 6.3 als Security/Supporting Module präzisiert; TenantContext bleibt cross-cutting.
+6. Identity & Access bleibt eigener Security-/Access-Building-Block; TenantContext ist ausdrücklich cross-cutting und kein Domain-Modul.
 
 ## Effective Baseline vor Phase 6.4
 
 - Phase 2 Requirements Baseline v1.1 FINAL
 - Phase 3 Scope & MVP v1.1 FINAL
+- Phase 3.5 Product Research & Validation FINAL / APPROVED
 - CR-01 / Baseline Amendment v1.2 FINAL
 - CR-02 B2B-SaaS Tenant Model v1.1 FINAL
 - Phase 4 Systemanalyse FINAL v1.2

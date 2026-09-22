@@ -18,7 +18,7 @@ Anforderung / Scope → Architekturentscheidung → Vertical Slice → Code → 
 | M4 Monatsplan | FR-MP-05..09; BR-MP-04..08; manuelle Erfassung als Core | MUST | Planning-Modul freigegeben |
 | Excel-Import | FR-MP-01..04 | SHOULD / Stretch | ZURÜCKGESTELLT bis Core stabil |
 | M5 Absage | FR-AB-01..03; BR-AB-01..05 | MUST | Modulgrenze freigegeben |
-| M5 Ersatz | BR-ER-00..07; BR-ER-10..11; FR-ER-00..04; FR-NOT-06; serverseitige Eligibility unter Nutzung von Planning-/Workforce-Daten | MUST | Modulgrenze freigegeben |
+| M5 Ersatz | BR-ER-00..07; BR-ER-10..11; FR-ER-00..04; FR-NOT-06; BR-ER-03 = pro Mitarbeiter und Ersatzdienst nur ein aktives Ersatzangebot; serverseitige Eligibility via Planning/Workforce | MUST | Modulgrenze freigegeben |
 | CR-01 | BR-ER-08 entfällt; quota-bezogener BR-ER-09 entfällt; AC-ER-04 entfällt | APPROVED CHANGE | FERTIG dokumentiert |
 | CR-02 | Company = Tenant; Account genau eine Company; Monate 4–6 Multi-Company/Productization; Billing bleibt out | APPROVED CHANGE | FERTIG dokumentiert |
 | M6 Statistik | planbasierte Arbeitstage + TAG/NACHT | MUST | Read Capability aus Planning |
@@ -33,6 +33,8 @@ Anforderung / Scope → Architekturentscheidung → Vertical Slice → Code → 
 | Tagesplan / Schichtleiter-Tagesplanung | Post-Praktikum / späteres Vertical |
 | Lohnabrechnungen | Post-Praktikum / späteres Vertical |
 | vollständige Notifications | Post-Praktikum |
+| digitaler Urlaubsantrag | Post-MVP / eigene Capability |
+| Urlaubskonto / Resturlaub | Post-MVP / separate Requirements erforderlich |
 | Wunschfrei | SHOULD / Stretch |
 | Schichttausch | SHOULD / Stretch |
 | Multi-Company-Aktivierung + minimaler Platform Admin | Monate 4–6 gemäß CR-02 |
@@ -62,6 +64,11 @@ Wirksamer Stand:
 - Monate 4–6: Multi-Company-Aktivierung + minimaler providerseitiger Platform/Tenant Admin
 - Billing/Subscription und vollständiges Self-Service-Onboarding bleiben WON'T NOW
 - Cross-Company Reads/Writes sind verboten und werden negativ getestet
+
+## Research-/Systemanalyse-Traceability
+
+- Phase 3.5 bestätigt digitalen Urlaubsantrag als Post-MVP-Kandidat und Urlaubskonto/Resturlaub als separate spätere Capability.
+- Phase 4 UC-10 bestätigt: pro Mitarbeiter und Ersatzbedarf nur ein aktives Ersatzangebot; korrespondiert mit BR-ER-03 aus Phase 2.
 
 ## Implementierungsfortschreibung
 
