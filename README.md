@@ -1,84 +1,192 @@
 # SecurePlan
 
-Praxisphasenprojekt an der THM: fokussierte, rollenbasierte Personaleinsatzplanung für Sicherheitsunternehmen.
+**Backend Engineering Case Study · THM Praxisphase · B2B-SaaS Workforce Planning**
 
-> **Stand 22.09.2026**  
-> **Aktueller formaler Schritt: Phase 6.5 – Transactions, Concurrency & Idempotency.**  
-> Phase 6.1–6.4 sind dokumentiert und freigegeben. Es existiert weiterhin **kein nachgewiesener Produktions-Anwendungscode**. Klickbare Phase-5-Prototypen sind Design-/UX-Artefakte, keine implementierte Produktfunktion.
+SecurePlan ist ein webbasiertes System zur strukturierten Personal- und Einsatzplanung für Sicherheitsunternehmen. Das Projekt entsteht im Rahmen meiner Praxisphase im B.Sc. Informatik an der Technischen Hochschule Mittelhessen (THM).
 
-## Projektstatus
+> **Projektstatus:** Architektur- und Planungsphase  
+> **Aktueller Gate:** Phase 6.5 – Transactions, Concurrency & Idempotency  
+> **Wichtig:** Es existiert aktuell noch kein nachgewiesener Produktions-Anwendungscode. UX-Prototypen und Architekturartefakte sind dokumentiert, aber nicht als implementierte Produktfunktionen zu verstehen.
 
-| Bereich | Status |
+---
+
+## 30-Sekunden-Überblick
+
+| Bereich | Inhalt |
 |---|---|
-| Phase 2 – Requirements Baseline v1.1 | **FINAL / APPROVED / FROZEN** |
-| Phase 3 – Scope & MVP v1.1 | **FINAL / APPROVED / FROZEN** |
-| Phase 3.5 – Product Research & Validation | **FINAL / APPROVED** |
-| CR-01 / Baseline Amendment v1.2 | **FINAL / APPROVED** – feste 3er-Ersatzgrenze entfernt |
-| CR-02 – B2B-SaaS-Tenant-Modell v1.1 | **FINAL / APPROVED** |
-| Phase 4 – Systemanalyse v1.2 | **FINAL / APPROVED** |
-| Phase 5 – UX/UI | **PASS FOR PHASE 6**; Phase-5.2-Amendment wirksam |
-| Phase 5.9 – reale Usability-Tests | **PENDING FOLLOW-UP**, blockiert Phase 6 nicht |
-| Phase 6.1–6.4 – Architektur | **FINAL / APPROVED bzw. RE-APPROVED** |
-| Phase 6.5 | **NÄCHSTER SCHRITT** |
-| Feature-Implementierung | **NOCH NICHT BEGONNEN / NICHT NACHGEWIESEN** |
+| Problem | Personal- und Einsatzplanung mit Rollen, Abwesenheiten, Ersatzprozessen und verbindlichen Business Rules |
+| Produkttyp | B2B-SaaS |
+| Architekturziel | Modularer Backend-Service mit klaren Domänengrenzen, RBAC, Tenant Context und auditierbaren Workflows |
+| Geplanter Backend-Stack | TypeScript · NestJS · PostgreSQL · REST APIs |
+| Engineering-Fokus | Requirements · API Design · Data Modeling · RBAC · Validation · Transactions · Concurrency · Testing · CI/CD |
+| Aktueller Stand | Requirements, Scope, Product Research, Systemanalyse, UX/UI und Architektur bis Phase 6.4 abgeschlossen |
 
-Details: [docs/project-status.md](docs/project-status.md)
+---
 
-## Produkt- und SaaS-Modell
+## Das Problem
 
-- SecurePlan ist B2B-SaaS.
-- Company = Tenant.
-- Ein Tenant-Benutzerkonto gehört genau einer Company.
-- Kein Company Switcher / keine Cross-Company-Membership.
-- Platform Admin ist separater Provider-Scope.
-- Monate 1–3: Praktikums-MVP, operativ eine Company, technisch tenant-aware.
-- Monate 4–6: Multi-Company/Productization mit minimalem providerseitigem Tenant Management.
-- Billing/Subscriptions und vollständiges Self-Service-Onboarding bleiben WON'T NOW.
+In Sicherheitsunternehmen müssen Mitarbeiter, Schichten, Projekte, Abwesenheiten und Ersatzbesetzungen koordiniert werden. Dabei entstehen mehrere technische Herausforderungen gleichzeitig:
 
-## Verbindlicher Praktikums-MVP
+- unterschiedliche Benutzerrollen und Berechtigungen,
+- verbindliche Regeln für Planung und Besetzung,
+- parallele Änderungen an denselben Planungsdaten,
+- nachvollziehbare Entscheidungen und Statusänderungen,
+- klare Trennung zwischen Tenant-Daten in einem B2B-SaaS-Modell.
 
-Der wirksame Umfang folgt Phase 3 plus genehmigten Change Requests:
+SecurePlan bildet diese Prozesse nicht nur als UI ab, sondern behandelt sie als explizite Backend-Domäne mit dokumentierten Regeln und Architekturentscheidungen.
+
+---
+
+## Meine Rolle im Projekt
+
+Ich bearbeite SecurePlan als Praxisphasenprojekt end-to-end von der Problemdefinition bis zur geplanten technischen Umsetzung.
+
+Mein bisheriger Schwerpunkt umfasst:
+
+- Requirements Engineering und Scope-Definition,
+- Zielgruppen- und Wettbewerbsanalyse,
+- Definition des verbindlichen MVP,
+- Modellierung von Rollen, Berechtigungen und Geschäftsprozessen,
+- Systemanalyse und Architekturentscheidungen,
+- API- und Datenmodellplanung,
+- Vorbereitung von Validation, Error Handling, Testing und CI,
+- Dokumentation von Change Requests und Architecture Gates.
+
+Dabei trenne ich bewusst zwischen **DOCUMENTED**, **PROTOTYPED** und **IMPLEMENTED**, damit der Projektstatus technisch nachvollziehbar bleibt.
+
+---
+
+## Architektur-Snapshot
+
+```mermaid
+flowchart LR
+    U[Client / UI] --> API[NestJS REST API]
+    API --> AUTH[Authentication / RBAC]
+    API --> TC[Tenant Context]
+    API --> MOD[Domain Modules]
+    MOD --> DB[(PostgreSQL)]
+    MOD --> AUDIT[Audit / Status Tracking]
+    API --> VAL[Validation & Error Handling]
+```
+
+### Zentrale Architekturthemen
+
+**RBAC & Tenant Context**  
+Mitarbeiter, Schichtleiter und Administratoren benötigen unterschiedliche Berechtigungen. Gleichzeitig gehört jedes Tenant-Benutzerkonto genau zu einer Company.
+
+**Business Rules**  
+Planung darf nicht nur über UI-Logik abgesichert werden. Regeln wie Verfügbarkeit, Rollenrechte und zulässige Statusübergänge müssen serverseitig validiert werden.
+
+**Concurrency & Idempotency**  
+Parallele Änderungen an Einsatz- und Ersatzprozessen dürfen nicht zu Doppelbesetzungen oder inkonsistenten Zuständen führen. Der aktuelle Architecture Gate behandelt deshalb Transaktionsgrenzen, Optimistic Locking, Duplicate Protection und Idempotency.
+
+**Auditierbarkeit**  
+Wichtige Statusänderungen und Entscheidungen sollen nachvollziehbar bleiben, ohne das MVP mit unnötiger Komplexität zu überladen.
+
+---
+
+## Verbindlicher MVP
+
+Der aktuelle Praktikums-MVP umfasst:
 
 1. Foundation
-2. Authentifizierung / RBAC / TenantContext
-3. Mitarbeiter & Projekte
-4. manueller Monatsplan + Publish + Mitarbeiteransicht
-5. Absage & Ersatz
-6. planbasierte Statistik
+2. Authentifizierung, RBAC und Tenant Context
+3. Mitarbeiter und Projekte
+4. Manueller Monatsplan mit Publish und Mitarbeiteransicht
+5. Absage- und Ersatzprozess
+6. Planbasierte Statistik
 7. Admin Work Queue
-8. Qualitätsminimum: Validation, Error Handling, Audit-Minimum, Tests, OpenAPI, CI
-9. reproduzierbare Demo-/Staging-Auslieferung
+8. Validation, Error Handling, Audit-Minimum, Tests, OpenAPI und CI
+9. Reproduzierbare Demo-/Staging-Auslieferung
 
-Excel-Import ist SHOULD/Stretch. Tagesplan, Lohnabrechnung und vollständige Notifications sind nicht Teil des verbindlichen 3-Monats-Praktikums-MVP.
+**Stretch:** Excel-Import  
+**Nicht Teil des verbindlichen 3-Monats-MVP:** Tagesplan, Lohnabrechnung und vollständige Notifications
 
-Siehe [docs/requirements/effective-mvp-baseline.md](docs/requirements/effective-mvp-baseline.md).
+Die wirksame Baseline ist dokumentiert unter  
+[docs/requirements/effective-mvp-baseline.md](docs/requirements/effective-mvp-baseline.md).
 
-## Dokumentation
+---
 
-| Dokument | Zweck |
+## Produkt- und Tenant-Modell
+
+- SecurePlan ist als **B2B-SaaS** konzipiert.
+- Eine **Company entspricht einem Tenant**.
+- Ein Tenant-Benutzerkonto gehört genau einer Company.
+- Kein Company Switcher und keine Cross-Company-Membership im MVP.
+- Platform Admin wird als separater Provider-Scope behandelt.
+- Monate 1–3: Praktikums-MVP mit einer operativen Company, aber tenant-aware Architektur.
+- Monate 4–6: geplante Productization und Multi-Company-Erweiterung.
+
+---
+
+## Aktueller Projektstatus
+
+| Phase | Status |
 |---|---|
-| [docs/README.md](docs/README.md) | Dokumentationsindex und Source-of-Truth-Regeln |
-| [docs/project-status.md](docs/project-status.md) | Aktueller Gate- und Phasenstand |
-| [docs/requirements/effective-mvp-baseline.md](docs/requirements/effective-mvp-baseline.md) | Wirksame MVP-/Produktbaseline |
-| [docs/requirements/cr-02-b2b-saas-tenant-model.md](docs/requirements/cr-02-b2b-saas-tenant-model.md) | B2B-SaaS-/Tenant-Change |
-| [docs/systemanalyse/phase-4-final-v1.2.md](docs/systemanalyse/phase-4-final-v1.2.md) | Phase-4-Systemanalyse, repo-lokale Kurzfassung |
-| [docs/ux-ui/phase-5-baseline.md](docs/ux-ui/phase-5-baseline.md) | Konsolidierter Phase-5-Handoff |
-| [docs/architektur/ueberblick.md](docs/architektur/ueberblick.md) | Phase-6-Architekturstand |
-| [docs/planung/aktuelle-woche.md](docs/planung/aktuelle-woche.md) | Aktueller Arbeitsabschnitt |
-| [docs/planung/fahrplan-12-wochen.md](docs/planung/fahrplan-12-wochen.md) | Implementierungsbaseline + CR-Overlay |
-| [docs/planung/arbeitsvorrat.md](docs/planung/arbeitsvorrat.md) | Priorisierter Arbeitsvorrat |
-| [docs/planung/fortschrittsprotokoll.md](docs/planung/fortschrittsprotokoll.md) | Tatsächlich nachweisbarer Fortschritt |
+| Requirements Baseline | FINAL / APPROVED / FROZEN |
+| Scope & MVP | FINAL / APPROVED / FROZEN |
+| Product Research & Validation | FINAL / APPROVED |
+| B2B-SaaS Tenant Model | FINAL / APPROVED |
+| Systemanalyse | FINAL / APPROVED |
+| UX/UI | PASS FOR PHASE 6 |
+| Architektur Phase 6.1–6.4 | FINAL / APPROVED |
+| Phase 6.5 – Transactions, Concurrency & Idempotency | CURRENT |
+| Feature-Implementierung | NOCH NICHT BEGONNEN / NICHT NACHGEWIESEN |
 
-## Statusdisziplin
+Vollständiger Status: [docs/project-status.md](docs/project-status.md)
 
-Für Umsetzungsaufgaben gilt: **GEPLANT · IN ARBEIT · FERTIG · BLOCKIERT · ZURÜCKGESTELLT**.
+---
 
-Bei Artefakten: **DOCUMENTED · PROTOTYPED · IMPLEMENTED**.
+## Engineering Evidence
 
-Ein dokumentierter oder klickbarer UX-Prototyp ist **nicht** automatisch implementierte Software.
+Für technische Reviewer und Recruiter sind insbesondere diese Dokumente relevant:
 
-## Nächster Gate
+| Artefakt | Was es zeigt |
+|---|---|
+| [Architekturüberblick](docs/architektur/ueberblick.md) | Architekturentscheidungen und aktueller Phase-6-Stand |
+| [Effective MVP Baseline](docs/requirements/effective-mvp-baseline.md) | Scope-Disziplin und Anforderungen |
+| [Systemanalyse](docs/systemanalyse/phase-4-final-v1.2.md) | Domänen- und Systemanalyse |
+| [UX/UI Baseline](docs/ux-ui/phase-5-baseline.md) | Übergang von Anforderungen zu Interaktionsdesign |
+| [Projektstatus](docs/project-status.md) | Nachweisbarer Fortschritt und Gates |
+| [12-Wochen-Fahrplan](docs/planung/fahrplan-12-wochen.md) | Implementierungsplanung |
+| [Fortschrittsprotokoll](docs/planung/fortschrittsprotokoll.md) | Tatsächlich dokumentierter Projektfortschritt |
 
-Phase 6.5 klärt Transaktionsgrenzen, Concurrency, Optimistic Locking, Idempotency und Duplicate Protection. Danach folgen Security/API/Data-Model-Details und das finale Architecture Review.
+Gesamter Dokumentationsindex: [docs/README.md](docs/README.md)
 
-**Keine Feature-Implementierung vor dem vollständigen Architektur-Gate.**
+---
+
+## Was das Projekt demonstriert
+
+SecurePlan dient mir nicht nur als Produktprojekt, sondern als Engineering Case Study. Der aktuelle Stand demonstriert insbesondere:
+
+- strukturiertes Requirements Engineering,
+- kontrolliertes Scope- und Change-Management,
+- Modellierung realer Business Rules,
+- rollenbasierte Zugriffskontrolle,
+- B2B-SaaS- und Tenant-Denken,
+- Architekturentscheidungen vor Implementierung,
+- Umgang mit Concurrency und Idempotency,
+- nachvollziehbare technische Dokumentation.
+
+Mit Beginn der Implementierungsphase wird diese Evidenz um ausführbaren Backend-Code, Tests, OpenAPI-Dokumentation, Docker/CI und eine reproduzierbare Demo erweitert.
+
+---
+
+## Nächste technische Schritte
+
+1. Phase 6.5 abschließen: Transactions, Concurrency, Optimistic Locking, Idempotency
+2. Security-, API- und Datenmodell-Details finalisieren
+3. Architecture Review abschließen
+4. NestJS/PostgreSQL-Projektstruktur aufsetzen
+5. Authentifizierung, RBAC und Tenant Context implementieren
+6. MVP-Module inkrementell umsetzen
+7. Tests, OpenAPI, Docker und CI ergänzen
+8. Demo-/Staging-Auslieferung vorbereiten
+
+---
+
+## Projektprinzip
+
+**Dokumentiert ist nicht implementiert. Prototypisiert ist nicht produktionsreif.**
+
+SecurePlan wird deshalb bewusst über nachvollziehbare Gates entwickelt: von Problem und Requirements über Systemanalyse und Architektur bis zur Implementierung und überprüfbaren Software.
