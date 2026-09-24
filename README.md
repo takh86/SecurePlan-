@@ -2,66 +2,73 @@
 
 **Backend Engineering Case Study · THM Praxisphase · B2B-SaaS Workforce Planning**
 
-SecurePlan ist ein webbasiertes System zur strukturierten Personal- und Einsatzplanung für Sicherheitsunternehmen. Das Projekt entsteht im Rahmen meiner Praxisphase im B.Sc. Informatik an der Technischen Hochschule Mittelhessen (THM).
+![Status](https://img.shields.io/badge/Architecture-6.1--6.7%20Approved-success)
+![Next](https://img.shields.io/badge/Next-Phase%206.8-blue)
+![Implementation](https://img.shields.io/badge/Production%20Code-Not%20Started-lightgrey)
 
-> **Projektstatus:** Architektur- und Planungsphase  
-> **Architekturstand:** Phase 6.1–6.7 FINAL / APPROVED  
-> **Nächster Abschnitt:** Phase 6.8  
-> **Implementierungsstatus:** Noch kein nachgewiesener Produktions-Anwendungscode. Architektur-, UX- und Planungsartefakte sind dokumentiert, aber nicht als implementierte Produktfunktionen zu verstehen.
+SecurePlan ist ein webbasiertes System zur strukturierten Personal- und Einsatzplanung für Sicherheitsunternehmen.  
+Das Projekt entsteht im Rahmen meiner **Praxisphase im B.Sc. Informatik an der Technischen Hochschule Mittelhessen (THM)**.
+
+> **Stand: 24.09.2026**  
+> **Architektur:** Phase 6.1–6.7 FINAL / APPROVED  
+> **Nächster Schritt:** Phase 6.8 → finales Architecture Gate → Human Approval → Implementierung  
+> **Implementierung:** Noch kein nachgewiesener Produktions-Anwendungscode. Architektur-, UX- und Planungsartefakte sind nicht mit implementierter Produktfunktion gleichzusetzen.
 
 ---
 
 ## 30-Sekunden-Überblick
 
-| Bereich | Inhalt |
+| Bereich | Aktueller Stand |
 |---|---|
-| Problem | Personal- und Einsatzplanung mit Rollen, Abwesenheiten, Ersatzprozessen und verbindlichen Business Rules |
-| Produkttyp | B2B-SaaS |
-| Architektur | Tenant-aware Modular Monolith |
-| Geplanter Backend-Stack | TypeScript · NestJS · PostgreSQL · REST APIs |
-| Kernkonzepte | RBAC · Tenant Isolation · Transactions · Optimistic Locking · Idempotency · API Contracts · Audit |
-| Aktueller Stand | Requirements, Scope, Product Research, Systemanalyse, UX/UI sowie Architektur Phase 6.1–6.7 abgeschlossen |
-| Nächster Schritt | Phase 6.8 und anschließend finales Architecture Gate vor Implementierungsstart |
+| **Problem** | Personal- und Einsatzplanung mit Rollen, Abwesenheiten, Ersatzprozessen und verbindlichen Business Rules |
+| **Produkttyp** | B2B-SaaS |
+| **Architekturstil** | Tenant-aware Modular Monolith |
+| **Geplanter Backend-Stack** | TypeScript · NestJS · PostgreSQL · REST APIs |
+| **Security** | Session Auth · RBAC · server-derived TenantContext · Tenant Isolation · CSRF |
+| **Consistency** | Transactions · Optimistic Locking · Idempotency · Duplicate Protection |
+| **API** | REST · `/api/v1` · DTO Contracts · Validation · stabile Domain/Error Codes |
+| **Integration** | Outbox-orientierte Integration Events |
+| **Architekturfortschritt** | Phase 6.1–6.7 abgeschlossen und freigegeben |
+| **Nächster Gate** | Phase 6.8 und finales Architecture Review |
 
 ---
 
-## Das Problem
+## Problem & Ziel
 
-In Sicherheitsunternehmen müssen Mitarbeiter, Projekte, Monatspläne, Abwesenheiten und Ersatzbesetzungen zuverlässig koordiniert werden.
+Sicherheitsunternehmen müssen Mitarbeiter, Projekte, Monatspläne, Abwesenheiten und Ersatzbesetzungen zuverlässig koordinieren.
 
-Daraus entstehen mehrere Backend-Herausforderungen:
+Dabei entstehen Backend-Herausforderungen wie:
 
-- unterschiedliche Benutzerrollen und Berechtigungen,
+- rollen- und kontextabhängige Berechtigungen,
 - Tenant-Isolation in einem B2B-SaaS-Modell,
-- verbindliche Regeln für Planung und Ersatzbesetzung,
+- komplexe Planungs- und Ersatzregeln,
 - parallele Änderungen an denselben Planungsdaten,
-- sichere und wiederholbare Command-Verarbeitung,
-- stabile API- und Error-Contracts,
-- nachvollziehbare Statusänderungen und Audit Events.
+- Duplicate Protection und wiederholbare Commands,
+- stabile API-, DTO- und Error-Contracts,
+- nachvollziehbare Audit- und Statusänderungen.
 
-SecurePlan behandelt diese Anforderungen als explizite Backend-Domäne und nicht nur als UI-Workflow.
+SecurePlan modelliert diese Anforderungen bewusst als **Backend-Domäne mit expliziten Business Rules und Architekturentscheidungen** – nicht nur als UI-Workflow.
 
 ---
 
-## Meine Rolle im Projekt
+## Meine Rolle
 
-Ich bearbeite SecurePlan als Praxisphasenprojekt end-to-end von der Problemdefinition bis zur geplanten technischen Umsetzung.
+Ich bearbeite SecurePlan end-to-end von der Problemdefinition bis zur geplanten technischen Umsetzung.
 
-Mein bisheriger Schwerpunkt umfasst:
+Bisherige Engineering-Arbeit:
 
-- Requirements Engineering und Scope-Definition,
-- Zielgruppen- und Wettbewerbsanalyse,
-- Definition und Governance des MVP,
-- Modellierung von Rollen, Berechtigungen und Geschäftsprozessen,
-- Systemanalyse und Domain-Schnitt,
-- Architektur eines tenant-aware Modular Monolith,
-- Definition von Modulgrenzen und Public Contracts,
-- Transaktions-, Concurrency- und Idempotency-Design,
-- Security Architecture und RBAC,
-- REST API-, DTO- und Error-Contract-Design,
-- Vorbereitung von Testing, OpenAPI, CI/CD und Deployment.
+- Requirements Engineering und Scope-Definition
+- Product Research und Zielgruppenanalyse
+- MVP-Definition und Change Governance
+- System- und Domainanalyse
+- Architektur eines tenant-aware Modular Monolith
+- Definition von Modulgrenzen, Ownership und Public Contracts
+- Transaction-, Concurrency- und Idempotency-Design
+- Security Architecture, RBAC und Tenant Isolation
+- REST API-, DTO-, Validation- und Error-Contract-Design
+- Vorbereitung von Testing, OpenAPI, CI/CD und Deployment
 
-Dabei trenne ich bewusst zwischen **DOCUMENTED**, **PROTOTYPED** und **IMPLEMENTED**, damit der Projektstatus technisch nachvollziehbar bleibt.
+**Statusdisziplin:** `DOCUMENTED` ≠ `PROTOTYPED` ≠ `IMPLEMENTED`.
 
 ---
 
@@ -76,12 +83,16 @@ flowchart LR
 
     API --> MOD[Domain Modules]
 
+    MOD --> PT[Platform & Tenant]
+    MOD --> IAM[Identity & Access]
     MOD --> WP[Workforce & Projects]
     MOD --> PLAN[Planning]
     MOD --> REP[Absage & Ersatz]
     MOD --> AUDIT[Audit]
 
-    WP --> DB[(PostgreSQL)]
+    PT --> DB[(PostgreSQL)]
+    IAM --> DB
+    WP --> DB
     PLAN --> DB
     REP --> DB
     AUDIT --> DB
@@ -92,129 +103,115 @@ flowchart LR
 ### Architekturprinzipien
 
 **Tenant-aware Modular Monolith**  
-SecurePlan startet bewusst als modularer Monolith. Fachliche Module besitzen klare Verantwortlichkeiten und kommunizieren ausschließlich über definierte Public Contracts.
+SecurePlan startet bewusst als modularer Monolith. Fachliche Module besitzen klare Ownership und kommunizieren über explizite Public Application Contracts.
 
-**RBAC & Tenant Isolation**  
-TenantContext wird serverseitig aus der authentifizierten Identität abgeleitet. Client-seitig gelieferte Company-IDs sind keine Trust Source. Cross-Company Reads und Writes sind verboten.
+**Tenant Isolation by Design**  
+Der TenantContext wird serverseitig aus der authentifizierten Identität abgeleitet. Client-seitig übergebene Company-IDs sind keine Trust Source. Cross-Company Reads/Writes sind verboten.
 
 **Business Rules im Backend**  
-Planungs-, Berechtigungs- und Statusregeln werden serverseitig validiert und nicht ausschließlich der UI überlassen.
+Planungs-, Berechtigungs- und Statusregeln werden serverseitig durchgesetzt und nicht der UI überlassen.
 
 **Consistency by Design**  
-Kritische Workflows berücksichtigen Transaction Boundaries, Optimistic Locking, Duplicate Protection und Idempotency.
+Kritische Workflows berücksichtigen Transaction Boundaries, Optimistic Locking, Idempotency und Duplicate Protection.
 
-**Stable API Contracts**  
-REST-Endpunkte, Commands, DTOs, Validation und Domain Errors werden als explizite Verträge behandelt.
+**Explicit API Contracts**  
+REST-Endpunkte, Commands, DTOs, Validation sowie Domain- und Error-Codes werden als stabile Verträge behandelt.
 
 ---
 
-## Architekturfortschritt – Phase 6
+## Phase 6 – Architekturfortschritt
 
-### 6.1 – Architecture Goals & Quality Attributes
-**FINAL / APPROVED**
+| Phase | Inhalt | Status |
+|---|---|---|
+| **6.1** | Architecture Goals & Quality Attributes | ✅ FINAL / APPROVED |
+| **6.2** | System Context & Container View | ✅ FINAL / APPROVED |
+| **6.3** | Backend Building Blocks | ✅ FINAL / APPROVED |
+| **6.4** | Module Dependencies & Public Contracts | ✅ FINAL / APPROVED |
+| **6.5** | Transactions, Concurrency & Consistency | ✅ FINAL / APPROVED |
+| **6.6** | Security Architecture & RBAC | ✅ FINAL / APPROVED |
+| **6.7** | API & Integration Architecture | ✅ FINAL / APPROVED |
+| **6.8** | nächster Architekturabschnitt | ⏭️ NEXT |
 
-Festlegung der Architekturziele und Qualitätsattribute als technische Leitplanken.
+### 6.5 – Transactions, Concurrency & Consistency
 
-### 6.2 – System Context & Container View
-**FINAL / APPROVED**
+Festgelegt wurden unter anderem:
 
-Definierter Systemkontext:
+- Transaction Boundaries
+- Commit/Rollback für kritische Workflows
+- Optimistic Locking
+- Idempotency
+- Duplicate Protection
+- Race-Condition-Behandlung
+- Audit-Verhalten innerhalb kritischer Transaktionen
+- Outbox-orientierte Integration Events
 
-```text
-Responsive Web Client
-        ↓
-REST Backend
-        ↓
-PostgreSQL
-```
+### 6.6 – Security Architecture & RBAC
 
-Grundentscheidung: tenant-aware Modular Monolith.
+Security-Baseline:
 
-### 6.3 – Backend Building Blocks
-**FINAL / APPROVED**
+- serverseitige Session-basierte Authentifizierung
+- sichere HttpOnly-Cookies
+- rollen- und kontextbasierte Autorisierung
+- server-derived TenantContext
+- konsequente Tenant Isolation
+- Resource Ownership Checks
+- CSRF-Schutz
+- Password-Hashing-Strategie
+- Trennung von Business Audit, Security Events und technischen Logs
+- getrennte Sicherheitskontexte für Platform Admin und Company Admin
 
-Definierte fachliche Building Blocks:
+### 6.7 – API & Integration Architecture
 
-1. Platform & Tenant Management
-2. Identity & Access
-3. Workforce & Projects
-4. Planning
-5. Absage & Ersatz
-6. Audit
+API- und Integrationsbaseline:
+
+- REST als primäre externe API
+- versionierte API unter `/api/v1`
+- explizite Commands für fachliche Mutationen
+- serverseitige Validation
+- stabile DTO-Contracts
+- konsistente Domain- und Error-Codes
+- Trennung von Tenant Plane und Provider / Control Plane
+- Outbox-orientierte Integrationsereignisse
+- Security-, Contract- und Integration-Tests als Teil der späteren Implementierungsbaseline
+
+---
+
+## Backend Building Blocks
+
+1. **Platform & Tenant Management**
+2. **Identity & Access**
+3. **Workforce & Projects**
+4. **Planning**
+5. **Absage & Ersatz**
+6. **Audit**
 
 Read Capabilities:
 
 - Employee Statistics
 - Admin Work Queue
 
-### 6.4 – Module Dependencies & Public Contracts
-**FINAL / APPROVED**
+Cross-cutting:
 
-Festgelegte Regeln:
+- TenantContext
+- Logging
+- Configuration
+- Persistence
 
-- kein Cross-Module Repository Access,
-- keine direkten Cross-Module Table Mutations,
-- keine zyklischen Dependencies,
-- Kommunikation über explizite Public Application Contracts.
+### Modulregeln
 
-### 6.5 – Transactions, Concurrency & Consistency
-**FINAL / APPROVED**
-
-Architekturentscheidungen zu:
-
-- Transaction Boundaries,
-- Commit/Rollback über kritische Workflows,
-- Optimistic Locking,
-- Idempotency,
-- Duplicate Protection,
-- Race Conditions,
-- Audit-Verhalten in kritischen Transaktionen,
-- Outbox-orientierter Verarbeitung von Integrationsereignissen.
-
-Ziel ist insbesondere, Doppelbesetzungen und inkonsistente Zustände bei parallelen Änderungen zu verhindern.
-
-### 6.6 – Security Architecture & RBAC
-**FINAL / APPROVED**
-
-Definierte Security-Baseline:
-
-- serverseitige Session-basierte Authentifizierung,
-- sichere HttpOnly-Cookies,
-- rollen- und kontextbasierte Autorisierung,
-- server-derived TenantContext,
-- konsequente Tenant Isolation,
-- Resource Ownership Checks,
-- CSRF-Schutz,
-- sichere Password-Hashing-Strategie,
-- Trennung von Business Audit, Security Events und technischen Logs.
-
-Platform Admin und Company Admin bleiben getrennte Sicherheitskontexte.
-
-### 6.7 – API & Integration Architecture
-**FINAL / APPROVED**
-
-Definierte API- und Integrationsprinzipien:
-
-- REST als primäre externe API,
-- explizite Commands für fachliche Mutationen,
-- versionierte API unter `/api/v1`,
-- serverseitige Validation,
-- stabile DTO-Contracts,
-- konsistente Domain- und Error-Codes,
-- Trennung von Tenant Plane und Provider/Control Plane,
-- Integrationsereignisse über Outbox-orientierte Mechanismen,
-- Security-, Contract- und Integration-Tests als Teil der späteren Implementierungsbaseline.
+- kein Cross-Module Repository Access
+- keine direkten Cross-Module Table Mutations
+- keine zyklischen Dependencies
+- Cross-Module Collaboration ausschließlich über explizite Public Contracts
 
 ---
 
 ## Verbindlicher Praktikums-MVP
 
-Der aktuelle MVP umfasst:
-
 1. Foundation
-2. Authentifizierung, RBAC und Tenant Context
+2. Authentication, RBAC und TenantContext
 3. Mitarbeiter und Projekte
-4. Manueller Monatsplan mit Publish und Mitarbeiteransicht
+4. Manueller Monatsplan, Publish und Mitarbeiteransicht
 5. Absage- und Ersatzprozess
 6. Planbasierte Statistik
 7. Admin Work Queue
@@ -225,106 +222,91 @@ Der aktuelle MVP umfasst:
 
 **Nicht Teil des verbindlichen 3-Monats-MVP:** Tagesplan, Lohnabrechnung und vollständige Notifications.
 
-Die wirksame Baseline ist dokumentiert unter  
-[docs/requirements/effective-mvp-baseline.md](docs/requirements/effective-mvp-baseline.md).
+→ [Effective MVP Baseline](docs/requirements/effective-mvp-baseline.md)
 
 ---
 
-## Produkt- und Tenant-Modell
+## SaaS- & Tenant-Modell
 
-- SecurePlan ist als **B2B-SaaS** konzipiert.
-- Eine **Company entspricht einem Tenant**.
-- Ein Tenant-Benutzerkonto gehört genau einer Company.
-- Kein Company Switcher und keine Cross-Company-Membership.
-- Platform Admin ist ein separater Provider-Scope.
-- Platform Admin besitzt kein implizites Recht auf operative Tenant-Daten.
-- Shared Database + Shared Schema ist die bevorzugte Startstrategie.
-- Monate 1–3: Praktikums-MVP mit einer operativen Company, technisch bereits tenant-aware.
-- Monate 4–6: geplante Multi-Company/Productization.
-
----
-
-## Aktueller Projektstatus
-
-| Bereich | Status |
-|---|---|
-| Requirements Engineering | FINAL / APPROVED / FROZEN |
-| Scope & MVP | FINAL / APPROVED / FROZEN |
-| Product Research & Validation | FINAL / APPROVED |
-| B2B-SaaS Tenant Model | FINAL / APPROVED |
-| Systemanalyse | FINAL / APPROVED |
-| UX/UI | PASS FOR PHASE 6 |
-| Phase 6.1 – Architecture Goals | FINAL / APPROVED |
-| Phase 6.2 – Context & Containers | FINAL / APPROVED |
-| Phase 6.3 – Backend Building Blocks | FINAL / APPROVED |
-| Phase 6.4 – Dependencies & Public Contracts | FINAL / APPROVED |
-| Phase 6.5 – Transactions & Consistency | FINAL / APPROVED |
-| Phase 6.6 – Security Architecture & RBAC | FINAL / APPROVED |
-| Phase 6.7 – API & Integration Architecture | FINAL / APPROVED |
-| Phase 6.8 | NEXT |
-| Production Feature Code | NOT IMPLEMENTED / NOT EVIDENCED |
-
-> Hinweis: Die detaillierten repo-lokalen Status-/Architekturdokumente für Phase 6.5–6.7 werden mit dem nächsten vollständigen Repository-Sync konsolidiert. Dieser README spiegelt bereits den freigegebenen Arbeitsstand bis Phase 6.7 wider.
+- **Company = Tenant**
+- ein Tenant-Benutzerkonto gehört genau einer Company
+- kein Company Switcher / keine Cross-Company-Membership
+- Platform Admin ist separater Provider-Scope
+- kein impliziter Zugriff des Platform Admin auf operative Tenant-Daten
+- Shared Database + Shared Schema als bevorzugte Startstrategie
+- Monate 1–3: eine operative Company, technisch bereits tenant-aware
+- Monate 4–6: geplante Multi-Company/Productization
+- Billing / Subscription Automation und vollständiges Self-Service-Onboarding bleiben außerhalb des aktuellen Scopes
 
 ---
 
 ## Engineering Evidence
 
-Für technische Reviewer und Recruiter sind insbesondere diese Artefakte relevant:
-
-| Artefakt | Was es zeigt |
+| Artefakt | Nachweis |
 |---|---|
-| [Effective MVP Baseline](docs/requirements/effective-mvp-baseline.md) | kontrollierter Scope und Requirements |
+| [Effective MVP Baseline](docs/requirements/effective-mvp-baseline.md) | Requirements, Scope und MVP-Governance |
 | [Systemanalyse](docs/systemanalyse/phase-4-final-v1.2.md) | Domain- und Systemanalyse |
-| [UX/UI Baseline](docs/ux-ui/phase-5-baseline.md) | Übergang von Anforderungen zu Interaktionsdesign |
-| [Architekturüberblick](docs/architektur/ueberblick.md) | Architekturstruktur und Building Blocks |
-| [Phase 6.3](docs/architektur/phase-6-3-backend-building-blocks.md) | Modulgrenzen und Ownership |
+| [UX/UI Baseline](docs/ux-ui/phase-5-baseline.md) | Übergang von Anforderungen zu Interaction Design |
+| [Architekturüberblick](docs/architektur/ueberblick.md) | Repo-lokaler Architekturindex |
+| [Phase 6.3](docs/architektur/phase-6-3-backend-building-blocks.md) | Module, Ownership und Building Blocks |
 | [Phase 6.4](docs/architektur/phase-6-4-module-dependencies-public-contracts.md) | Dependencies und Public Contracts |
-| [Projektstatus](docs/project-status.md) | repo-lokaler Gate- und Phasenstand |
-| [Fortschrittsprotokoll](docs/planung/fortschrittsprotokoll.md) | dokumentierter Projektfortschritt |
+| [Projektstatus](docs/project-status.md) | Repo-lokaler Gate- und Phasenstatus |
+| [Fortschrittsprotokoll](docs/planung/fortschrittsprotokoll.md) | Nachvollziehbarer Projektfortschritt |
+
+> **Repository-Sync-Hinweis:** Der freigegebene Arbeitsstand ist Phase 6.1–6.7. Die detaillierten repo-lokalen Architekturdokumente für Phase 6.5–6.7 sind noch nicht vollständig mit dem Dokumentationsindex synchronisiert. Bis zum nächsten vollständigen Repo Sync dokumentiert dieser README den aktuell freigegebenen Stand, ohne daraus Implementierungsclaims abzuleiten.
 
 ---
 
 ## Was SecurePlan aktuell demonstriert
 
-Der aktuelle Projektstand liefert noch keinen Produktionscode, zeigt aber bereits Engineering-Arbeit in mehreren Bereichen:
+Auch vor dem Implementierungsstart zeigt das Projekt bereits nachvollziehbare Engineering-Arbeit in:
 
-- Requirements Engineering,
-- Product Scope und Change Management,
-- Domain Modeling,
-- B2B-SaaS Multi-Tenancy,
-- Modular-Monolith-Architektur,
-- Modulgrenzen und Ownership,
-- RBAC und Tenant Isolation,
-- Transaction Design,
-- Concurrency und Optimistic Locking,
-- Idempotency und Duplicate Protection,
-- REST API Design,
-- DTO- und Error Contracts,
-- Audit- und Integration-Event-Design,
-- technische Dokumentation und Architecture Gates.
+- Requirements Engineering
+- Product Scope & Change Management
+- Domain Modeling
+- B2B-SaaS Multi-Tenancy
+- Modular-Monolith-Architektur
+- Modulgrenzen und Ownership
+- RBAC und Tenant Isolation
+- Transaction Design
+- Concurrency & Optimistic Locking
+- Idempotency & Duplicate Protection
+- REST API Design
+- DTO-, Validation- und Error Contracts
+- Audit- und Integration-Event-Design
+- technische Dokumentation und Architecture Gates
 
-Mit Beginn der Implementierungsphase wird diese Evidenz um ausführbaren Backend-Code, Datenbankmigrationen, Tests, OpenAPI, Docker, CI/CD und eine reproduzierbare Demo erweitert.
-
----
-
-## Nächste technische Schritte
-
-1. Phase 6.8 bearbeiten und freigeben
-2. verbleibende Architekturentscheidungen und ADRs konsolidieren
-3. vollständiges Architecture Review durchführen
-4. Human Approval für den Implementierungsstart
-5. NestJS/PostgreSQL-Projektstruktur aufsetzen
-6. Authentication, RBAC und TenantContext implementieren
-7. MVP-Module inkrementell entwickeln
-8. Tests, OpenAPI, Docker und CI/CD ergänzen
-9. Demo-/Staging-Auslieferung vorbereiten
+Mit Beginn der Implementierungsphase wird diese Evidenz um **ausführbaren Backend-Code, Datenbankmigrationen, automatisierte Tests, OpenAPI, Docker, CI/CD und eine reproduzierbare Demo** erweitert.
 
 ---
 
-## Projektprinzip
+## Nächste Schritte
 
-**Dokumentiert ist nicht implementiert. Prototypisiert ist nicht produktionsreif.**
+```text
+Phase 6.8
+   ↓
+verbleibende ADRs / Architecture Decisions
+   ↓
+Final Architecture Review
+   ↓
+Human Approval
+   ↓
+NestJS + PostgreSQL Foundation
+   ↓
+Authentication / RBAC / TenantContext
+   ↓
+MVP Modules
+   ↓
+Tests + OpenAPI + Docker + CI/CD
+   ↓
+Demo / Staging
+```
+
+---
+
+## Engineering Principle
+
+> **Dokumentiert ist nicht implementiert. Prototypisiert ist nicht produktionsreif.**
 
 SecurePlan wird bewusst über nachvollziehbare Gates entwickelt:
 
@@ -346,4 +328,4 @@ Implementation
 Testing & Delivery
 ```
 
-Ziel ist nicht, möglichst früh Code zu produzieren, sondern eine nachvollziehbare, testbare und wartbare Backend-Lösung für reale Business-Prozesse zu entwickeln.
+Ziel ist eine nachvollziehbare, testbare und wartbare Backend-Lösung für reale Business-Prozesse – nicht möglichst früh möglichst viel Code.
